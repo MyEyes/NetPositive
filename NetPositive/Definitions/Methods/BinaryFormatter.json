@@ -6,7 +6,9 @@
         "SignatureMatches(.*::.*(Copy|Clone).*)"
       ],
       "risk": "Low",
-      "desc": "Method calls BinaryFormatter::Deserialize, but is likely a deep clone"
+      "desc": "Method calls BinaryFormatter::Deserialize, but is likely a deep clone",
+      "title": "BinaryFormatter (probably deep clone)",
+      "tags": [ "low", "binform", "deserialize" ]
     },
     {
       "marker": [
@@ -14,7 +16,9 @@
         "Not(ClassCalls(.*BinaryFormatter::set_Binder.*))"
       ],
       "risk": "High",
-      "desc": "Method calls BinaryFormatter::Deserialize and doesn't set a Binder anywhere"
+      "desc": "Method calls BinaryFormatter::Deserialize and doesn't set a Binder anywhere",
+      "title": "BinaryFormatter without Binder",
+      "tags": [ "high", "binform", "deserialize" ]
     },
     {
       "marker": [
@@ -22,14 +26,18 @@
         "Not(Calls(.*BinaryFormatter::set_Binder.*))"
       ],
       "risk": "Maybe",
-      "desc": "Method calls BinaryFormatter::Deserialize, but sets a binder somewhere in the class"
+      "desc": "Method calls BinaryFormatter::Deserialize, but sets a binder somewhere in the class",
+      "title": "BinaryFormatter with Binder in class",
+      "tags": [ "maybe", "binform", "deserialize" ]
     },
     {
       "marker": [
         "Calls(.*BinaryFormatter::Deserialize.*)"
       ],
       "risk": "Low",
-      "desc": "Method calls BinaryFormatter::Deserialize, but sets a binder"
+      "desc": "Method calls BinaryFormatter::Deserialize, but sets a binder",
+      "title": "BinaryFormatter with Binder",
+      "tags": [ "low", "binform", "deserialize" ]
     }
   ]
 ]

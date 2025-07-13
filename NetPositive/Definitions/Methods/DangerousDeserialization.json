@@ -1,0 +1,66 @@
+﻿[
+  [
+    {
+      "marker": [
+        "Calls(.*IFormatter::Deserialize.*)"
+      ],
+      "risk": "Maybe",
+      "desc": "Method performs generic deserialization and could potentially be dangerous",
+      "title": "Generic Deserialization",
+      "tags": [ "maybe", "generic", "deserialize" ]
+    }
+  ],
+  [
+    {
+      "marker": [
+        "Calls(.*XamlReader::Load.*)"
+      ],
+      "risk": "High",
+      "desc": "Method uses XamlReader::Load which allows arbitrary code execution",
+      "title": "XamlReader::Load Deserialization",
+      "tags": [ "maybe", "xaml read", "deserialize" ]
+    },
+    {
+      "marker": [
+        "Calls(.*XamlReader::Parse.*)"
+      ],
+      "risk": "High",
+      "desc": "Method uses XamlReader::Parse which allows arbitrary code execution",
+      "title": "XamlReader::Parse Deserialization",
+      "tags": [ "maybe", "xaml read", "deserialize" ]
+    }
+  ],
+  [
+    {
+      "marker": [
+        "Calls(.*SoapFormatter::Deserialize.*)"
+      ],
+      "risk": "High",
+      "desc": "Method calls SoapFormatter::Deserialize which allows arbitrary code execution",
+      "title": "SoapFormatter Deserialization",
+      "tags": [ "maybe", "soap form", "deserialize" ]
+    }
+  ],
+  [
+    {
+      "marker": [
+        "Calls(.*LosFormatter::Deserialize.*)"
+      ],
+      "risk": "High",
+      "desc": "Method calls LosFormatter::Deserialize which allows arbitrary code execution",
+      "title": "LosFormatter Deserialization",
+      "tags": [ "maybe", "los form", "deserialize" ]
+    }
+  ],
+  [
+    {
+      "marker": [
+        "Calls(.*NetDataContractSerializer::Deserialize.*)"
+      ],
+      "risk": "High",
+      "desc": "Method calls NetDataContractSerializer::Deserialize which allows arbitrary code execution",
+      "title": "NetDataContractSerializer Deserialization",
+      "tags": [ "maybe", "net cont", "deserialize" ]
+    }
+  ]
+]
