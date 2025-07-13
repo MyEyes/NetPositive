@@ -120,13 +120,11 @@ namespace NetPositive
             }
         }
 
-        // Token: 0x06000011 RID: 17 RVA: 0x000027C4 File Offset: 0x000009C4
         private bool isBelowBasePath(string resolvedPath)
         {
-            for (int i = 0; i < this.resolvedBasePaths.Length; i++)
+            for (int i = 0; i < resolvedBasePaths.Length; i++)
             {
-                bool flag = resolvedPath.StartsWith(this.resolvedBasePaths[i]);
-                if (flag)
+                if (resolvedPath.StartsWith(resolvedBasePaths[i]))
                 {
                     return true;
                 }
@@ -134,46 +132,37 @@ namespace NetPositive
             return false;
         }
 
-        // Token: 0x06000012 RID: 18 RVA: 0x00002808 File Offset: 0x00000A08
         public bool MatchesFilter(string path)
         {
-            string ext = Path.GetExtension(path);
+            var ext = Path.GetExtension(path);
             return ext == ".exe" || ext == ".dll";
         }
 
-        // Token: 0x06000013 RID: 19 RVA: 0x0000283C File Offset: 0x00000A3C
         IEnumerator<string> IEnumerable<string>.GetEnumerator()
         {
             Queue<string> pendingPaths = new Queue<string>();
             HashSet<string> traversedPaths = new HashSet<string>();
-            foreach (string p in this.basePaths)
-            {
+            foreach (var p in this.basePaths)
                 pendingPaths.Enqueue(p);
-            }
-            string[] array = null;
             while (pendingPaths.Count > 0)
             {
                 string current = pendingPaths.Dequeue();
-                bool flag = this.recursive && Directory.Exists(current);
-                if (flag)
+
+                if (this.recursive && Directory.Exists(current))
                 {
                     this._EnqueueChildren(current, pendingPaths, traversedPaths);
                 }
-                bool flag2 = File.Exists(current) && this.MatchesFilter(current);
-                if (flag2)
+
+                if (File.Exists(current) && this.MatchesFilter(current))
                 {
                     yield return current;
                 }
-                current = null;
             }
-            yield break;
         }
 
-        // Token: 0x06000014 RID: 20 RVA: 0x0000284C File Offset: 0x00000A4C
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return ((IEnumerable<string>)this).GetEnumerator();
+            return (this as IEnumerable<string>).GetEnumerator();
         }
-
     }
 }

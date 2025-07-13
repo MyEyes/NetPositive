@@ -15,7 +15,7 @@ namespace NetPositive
             ScanArguments result = new ScanArguments();
             for(int i=0; i<argv.Length; i++)
             {
-                if( argv[i]=="-r" )
+                if(argv[i]=="-r" )
                 {
                     result.recursive = getNextArgAsBool(argv, true, ref i);
                 }
