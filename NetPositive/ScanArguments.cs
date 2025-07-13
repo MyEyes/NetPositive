@@ -13,5 +13,7 @@ namespace NetPositive
         public List<string> basePaths = new();
         public List<string> scanSpec = new();
         public string outputPath = null;
+        public string aggregatorUri = null;
+        public bool printHelp = false;
     }
 }

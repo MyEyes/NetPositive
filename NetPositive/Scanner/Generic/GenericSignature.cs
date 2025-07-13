@@ -13,7 +13,9 @@ namespace NetPositive.Scanner.Generic
     {
         string RiskText = "";
         string Description = "";
+        string Title = "";
         List<IGenericMarker> MarkerList = new();
+        private List<string> Tags = new List<string>();
         public GenericSignature(JsonElement definition)
         {
             if (definition.ValueKind != JsonValueKind.Object)
@@ -45,6 +47,25 @@ namespace NetPositive.Scanner.Generic
                     this.MarkerList.Add(MarkerParser.MarkerFromString(curr.GetString()));
                 }
             }
+            JsonElement titleElement;
+            bool flag8 = !definition.TryGetProperty("title", out titleElement) || titleElement.ValueKind != JsonValueKind.String;
+            if (flag8)
+            {
+                this.Title = this.Description;
+            }
+            else
+            {
+                this.Title = titleElement.GetString();
+            }
+            JsonElement tagsElement;
+            bool flag9 = definition.TryGetProperty("tags", out tagsElement) && tagsElement.ValueKind == JsonValueKind.Array;
+            if (flag9)
+            {
+                foreach (JsonElement tag in tagsElement.EnumerateArray())
+                {
+                    this.Tags.Add(tag.GetString());
+                }
+            }
         }
 
         public bool Scan(IResultContainer results, IMethod method)
@@ -57,11 +78,14 @@ namespace NetPositive.Scanner.Generic
                 }
             }
 
-            var result = new ScanResult();
-            result.Risk = this.RiskText;
-            result.Description = this.Description;
-            result.Method = method;
-            results.AddResult(result);
+            results.AddResult(new ScanResult
+            {
+                Risk = this.RiskText,
+                Description = this.Description,
+                Method = method,
+                Title = this.Title,
+                Tags = this.Tags
+            });
             return true;
         }
     }

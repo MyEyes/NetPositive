@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using dnlib.DotNet;
 using NetPositive.Scanner;
+using NetPositive.Scanner.Results;
 
 namespace NetPositive
 {
@@ -22,11 +23,23 @@ namespace NetPositive
                 Console.WriteLine("Error: No scanners specified, aborting. Please specify with -S");
                 return;
             }
+
             IResultContainer results;
-            if(scanArguments.outputPath != null)
-                results = new FileResultContainer(scanArguments.outputPath);
+            if (scanArguments.aggregatorUri != null)
+            {
+                results = new AggregatorResultContainer(scanArguments.aggregatorUri, args);
+            }
             else
-                results = new CLIResultContainer();
+            {
+                if (scanArguments.outputPath != null)
+                {
+                    results = new FileResultContainer(scanArguments.outputPath);
+                }
+                else
+                {
+                    results = new CLIResultContainer();
+                }
+            }
             //Iterate over all targets and run scanners
             foreach (string path in scanTargets)
             {
